@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Android-SCV-Import-Export</string>
+    <string name="sample_text">12.325 Km</string>
+    <string name="sample_title">St. Pole Hospital</string>
 </resources>
