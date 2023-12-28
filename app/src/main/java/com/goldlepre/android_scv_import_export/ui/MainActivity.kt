@@ -4,12 +4,15 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.goldlepre.android_scv_import_export.R
 import com.goldlepre.android_scv_import_export.adapters.MainListAdapter
 import com.goldlepre.android_scv_import_export.databinding.ActivityMainBinding
 import com.goldlepre.android_scv_import_export.models.UserData
+import com.goldlepre.android_scv_import_export.models.excel.ExcelData
 import com.goldlepre.android_scv_import_export.models.excel.ExcelRepository
 import java.io.InputStream
 
@@ -17,11 +20,14 @@ import java.io.InputStream
 class MainActivity : AppCompatActivity() {
 
     private val PICKFILE_REQUEST_CODE = 109
+    private val fm = supportFragmentManager
 
     private lateinit var binder: ActivityMainBinding
     private lateinit var rep: ExcelRepository
     private var classTitle = "Empty"
     private var classInstructor = "Empty"
+
+    private var detailFragment: DetailFragment = DetailFragment.newInstance()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binder = ActivityMainBinding.inflate(layoutInflater)
@@ -38,6 +44,14 @@ class MainActivity : AppCompatActivity() {
             listRecyclerview.setHasFixedSize(true)
             listRecyclerview.adapter = adapter
 
+            adapter.setOnClickListener(object :
+                MainListAdapter.OnClickListener {
+                override fun onClick(position: Int, data: ExcelData) {
+                    fm.beginTransaction().add(R.id.container, detailFragment).addToBackStack("DETAILS").commitAllowingStateLoss()
+                    importCsvBtn.visibility = View.INVISIBLE
+//                    Toast.makeText(applicationContext, "${data.title} clicked here", Toast.LENGTH_SHORT).show()
+                }
+            })
 
             importCsvBtn.setOnClickListener {
                 openFilePicker()
@@ -101,6 +115,16 @@ class MainActivity : AppCompatActivity() {
         }else{
             Toast.makeText(applicationContext, "ERROR WITH THE FILE: \nThe titles(First line) of the CSV file should be [Name,Email,Phone,ClassName,TeacherName]",Toast.LENGTH_LONG).show()
             return listOf()
+        }
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onBackPressed() {
+        if(fm.backStackEntryCount > 0){
+            binder.importCsvBtn.visibility = View.VISIBLE
+            fm.popBackStack()
+        }else{
+            finish()
         }
     }
 }

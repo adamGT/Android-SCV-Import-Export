@@ -10,6 +10,7 @@ import com.goldlepre.android_scv_import_export.models.excel.ExcelData
 
 class MainListAdapter: RecyclerView.Adapter<MainListAdapter.ListViewModel> () {
     private var dataList: List<ExcelData> = listOf()
+    private var onClickListener: OnClickListener? = null
 
     class ListViewModel(itemView: View):RecyclerView.ViewHolder(itemView){
         val title: TextView = itemView.findViewById(R.id.title)
@@ -30,9 +31,22 @@ class MainListAdapter: RecyclerView.Adapter<MainListAdapter.ListViewModel> () {
         return dataList.size
     }
 
+    fun setOnClickListener(onClickListener: OnClickListener) {
+        this.onClickListener = onClickListener
+    }
+
+    interface OnClickListener {
+        fun onClick(position: Int, data: ExcelData)
+    }
+
     override fun onBindViewHolder(holder: ListViewModel, position: Int) {
         val data =dataList[position]
         holder.title.text = data.title
         holder.owner.text = data.owner
+        holder.itemView.setOnClickListener {
+            if (onClickListener != null) {
+                onClickListener!!.onClick(position, data )
+            }
+        }
     }
 }
