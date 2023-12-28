@@ -91,7 +91,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun readCsv(inputStream: InputStream): List<UserData> {
-        var counter = 0;
+        var counter = 0
         val reader = inputStream.bufferedReader()
         val header = reader.readLine()
         Log.d("TAGG",header)
