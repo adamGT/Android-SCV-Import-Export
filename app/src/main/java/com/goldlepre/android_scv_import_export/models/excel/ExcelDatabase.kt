@@ -41,9 +41,9 @@ abstract class ExcelDatabase: RoomDatabase() {
         private fun populateDatabase(db: ExcelDatabase) {
             val excelDao = db.excelDao()
             doOnBackground {
-                excelDao.insert(ExcelData("title 1", "desc 1", arrayListOf(UserData("one", "two", "three"))))
-                excelDao.insert(ExcelData("title 2", "desc 2", arrayListOf(UserData("one", "two", "three"))))
-                excelDao.insert(ExcelData("title 3", "desc 3", arrayListOf(UserData("one", "two", "three"))))
+//                excelDao.insert(ExcelData("title 1", "desc 1", arrayListOf(UserData("one", "two", "three"))))
+//                excelDao.insert(ExcelData("title 2", "desc 2", arrayListOf(UserData("one", "two", "three"))))
+//                excelDao.insert(ExcelData("title 3", "desc 3", arrayListOf(UserData("one", "two", "three"))))
 
             }
         }

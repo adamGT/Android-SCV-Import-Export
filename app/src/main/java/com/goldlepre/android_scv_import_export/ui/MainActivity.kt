@@ -27,7 +27,6 @@ class MainActivity : AppCompatActivity() {
     private var classTitle = "Empty"
     private var classInstructor = "Empty"
 
-    private var detailFragment: DetailFragment = DetailFragment.newInstance()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binder = ActivityMainBinding.inflate(layoutInflater)
@@ -47,6 +46,7 @@ class MainActivity : AppCompatActivity() {
             adapter.setOnClickListener(object :
                 MainListAdapter.OnClickListener {
                 override fun onClick(position: Int, data: ExcelData) {
+                    val detailFragment: DetailFragment = DetailFragment.newInstance(position)
                     fm.beginTransaction().add(R.id.container, detailFragment).addToBackStack("DETAILS").commitAllowingStateLoss()
                     importCsvBtn.visibility = View.INVISIBLE
 //                    Toast.makeText(applicationContext, "${data.title} clicked here", Toast.LENGTH_SHORT).show()
@@ -81,7 +81,7 @@ class MainActivity : AppCompatActivity() {
                 if (data.isNotEmpty()) {
                     Log.d("TAGG", data[0].email)
 
-                    //Do My Logic Here
+                    rep.insert(ExcelData(classTitle, classInstructor, data))
 
                 } else {
                     Toast.makeText(applicationContext, "ERROR WITH THE FILE: \nThe File is Empty",Toast.LENGTH_SHORT).show()
@@ -109,7 +109,7 @@ class MainActivity : AppCompatActivity() {
                         this.classInstructor = teacher
                     }
                     counter++
-                    val (name, email, phone) = it.split(',', ignoreCase = false, limit = 3)
+                    val (name, email, phone, classTitle, teacher) = it.split(',', ignoreCase = false, limit = 5)
                     UserData(name.trim(), email.trim(), phone.trim())
                 }.toList()
         }else{

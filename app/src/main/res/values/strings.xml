@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Android-SCV-Import-Export</string>
-    <string name="sample_text">12.325 Km</string>
-    <string name="sample_title">St. Pole Hospital</string>
+    <string name="sample_text">Professor Ted Mosbey</string>
+    <string name="sample_title">Introduction to C++</string>
     
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="button_to_import_csv_files_from_storage">Button to import CSV files from storage</string>
